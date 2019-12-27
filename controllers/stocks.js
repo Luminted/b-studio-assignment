@@ -1,5 +1,4 @@
 const db = require('../database');
-const moment = require('moment');
 const utils = require('./utils');
 
 
@@ -68,18 +67,18 @@ function getMaxAndMinPriceFilteredBySymbolAndDaterange(symbol, start, end) {
                     reject(err);
                 }
                 if(row && row.lowest !== null && row.highest !== null){
-                const {
-                    lowest,
-                    highest
-                } = row;
-                resolve({
-                    statusCode: 200,
-                    result: {
+                    const {
                         lowest,
-                        highest,
-                        symbol
-                    }
-                })
+                        highest
+                    } = row;
+                    resolve({
+                        statusCode: 200,
+                        result: {
+                            lowest,
+                            highest,
+                            symbol
+                        }
+                    })
                 }
                 else{
                     resolve({

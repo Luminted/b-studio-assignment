@@ -8,18 +8,16 @@ router.get('/:stockSymbol/trades', function(req, res){
     const {stockSymbol} = req.params;
     stocksController.getTradeRecordsFilteredBySymbolAndTypeAndDaterange(stockSymbol, type, start, end)
     .then(resultObj => {
-        switch(resultObj.statusCode){
-            case 200:
-                res.status(resultObj.statusCode);
-                res.send(resultObj.result);
-                break;
-            default:
-                res.sendStatus(resultObj.statusCode);
+        const {statusCode} = resultObj;
+        if(statusCode == 200){
+            res.status(statusCode);
+            send(resultObj.result);
+        }else{
+            res.sendStatus(statusCode)
         }
     })
     .catch(err => {
         console.log(err);
-        res.sendStatus(500);
     });
 })
 
@@ -28,21 +26,16 @@ router.get('/:stockSymbol/price', function(req, res){
     const {stockSymbol} = req.params;
     stocksController.getMaxAndMinPriceFilteredBySymbolAndDaterange(stockSymbol, start, end)
     .then(resultObj => {
-        switch(resultObj.statusCode){
-            case 200:
-                res.status(resultObj.statusCode);
-                res.send(resultObj.result);
-                break;
-            case 404:
-                res.sendStatus(resultObj.statusCode);
-                break;
-            default:
-                res.sendStatus(resultObj.statusCode);
+        const {statusCode} = resultObj;
+        if(statusCode == 200){
+            res.status(statusCode);
+            send(resultObj.result);
+        }else{
+            res.sendStatus(statusCode)
         }
     })
     .catch(err => {
         console.log(err);
-        res.sendStatus(500);
     })
 })
 
