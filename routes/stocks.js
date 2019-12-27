@@ -34,8 +34,7 @@ router.get('/:stockSymbol/price', function(req, res){
                 res.send(resultObj.result);
                 break;
             case 404:
-                res.status(resultObj.statusCode);
-                res.send(resultObj.result);
+                res.sendStatus(resultObj.statusCode);
                 break;
             default:
                 res.sendStatus(resultObj.statusCode);

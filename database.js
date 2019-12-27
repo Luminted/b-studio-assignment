@@ -6,8 +6,8 @@ const CREATE_TABLE_TRADES = `CREATE TABLE IF NOT EXISTS trades (
   user_id INTEGER NOT NULL,
   user_name TEXT NOT NULL,
   symbol TEXT NOT NULL,
-  shares INTEGER CHECK (shares >=10 AND shares <= 30),
-  price REAL CHECK (price >= 130.42 AND price <= 195.65),
+  shares INTEGER CHECK (shares >=10),
+  price REAL CHECK (price >= 130.42),
   timestamp TEXT NOT NULL
 );`
 

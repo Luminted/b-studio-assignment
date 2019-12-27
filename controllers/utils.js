@@ -1,6 +1,6 @@
 const moment = require('moment');
 
-const UTC_OFFSET = -4;
+const EST_UTC_OFFSET = 4;
 const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
 function dbRowToTradeJSONRecord(row){
@@ -15,12 +15,25 @@ function dbRowToTradeJSONRecord(row){
         symbol,
         shares,
         price,
-        timestamp: moment(timestamp).utc(UTC_OFFSET).format(DATE_FORMAT)
+        timestamp: timestampFromUTCToEST(timestamp)
     }
+}
+
+function timestampFromUTCToEST(timestamp){
+    return moment(timestamp).add(EST_UTC_OFFSET, 'hours').format(DATE_FORMAT);
+}
+
+function timestampFomESTToUTC(timestamp){
+    return moment(timestamp).subtract(EST_UTC_OFFSET, 'hours').format(DATE_FORMAT);
+}
+
+function isValidTimestamp(timestamp){
+    return moment(timestamp, DATE_FORMAT, true).isValid();
 }
 
 module.exports = {
     dbRowToTradeJSONRecord,
-    UTC_OFFSET,
-    DATE_FORMAT
+    timestampFromUTCToEST,
+    timestampFomESTToUTC,
+    isValidTimestamp
 }

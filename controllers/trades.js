@@ -1,11 +1,10 @@
 const db = require('../database');
 const utils = require('./utils');
-const moment = require('moment');
 
 
 function addTrade(entry){
     const {id, type, user, symbol, shares, price, timestamp} = entry;
-    const params = [id, type, user.id, user.name, symbol, shares, price, moment(timestamp).utc().format(utils.DATE_FORMAT)];
+    const params = [id, type, user.id, user.name, symbol, shares, price,utils.timestampFomESTToUTC(timestamp)];
     const sql = 
     `INSERT INTO trades
     (trade_id,
@@ -17,6 +16,7 @@ function addTrade(entry){
         price,
         timestamp)
     VALUES (${params.map(() => '?').join(',')});`;
+    console.log('is valid timestamp format ', utils.isValidTimestamp(timestamp));
     return new Promise((resolve, reject) => {
         db.serialize(() => {
             db.run(sql, params, err => {
