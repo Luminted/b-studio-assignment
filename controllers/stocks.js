@@ -9,7 +9,7 @@ function getTradeRecordsFilteredBySymbolAndTypeAndDaterange(symbol, type, start,
     WHERE symbol='${symbol}'`;
     const resultSQL =
         `SELECT * FROM trades
-    WHERE symbol="${symbol}" AND type="${type}" AND date(timestamp) BETWEEN date('${moment(start).utc(utils.UTC_OFFSET).format()}') AND date('${moment(end).utc(UTC).format()}');`;
+    WHERE symbol="${symbol}" AND type="${type}" AND date(timestamp) BETWEEN date('${moment(start).utc().format()}') AND date('${moment(end).utc().format()}');`;
 
     return new Promise((resolve, reject) => {
         db.serialize(() => {
@@ -46,7 +46,7 @@ function getMaxAndMinPriceFilteredBySymbolAndDaterange(symbol, start, end) {
      MAX(price) AS highest,
      MIN(price) AS lowest
     FROM trades
-    WHERE symbol='${symbol}' AND date(timestamp) BETWEEN date('${moment(start).utc(utils.UTC_OFFSET).format()}') AND date('${moment(end).utc(UTC).format()}')
+    WHERE symbol='${symbol}' AND date(timestamp) BETWEEN date('${moment(start).utc().format()}') AND date('${moment(end).utc().format()}')
     LIMIT 1;`
     return new Promise((resolve, reject) => {
         db.serialize(() => {
