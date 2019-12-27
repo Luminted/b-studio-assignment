@@ -16,8 +16,12 @@ function addTrade(entry){
         price,
         timestamp)
     VALUES (${params.map(() => '?').join(',')});`;
-    console.log('is valid timestamp format ', utils.isValidTimestamp(timestamp));
     return new Promise((resolve, reject) => {
+        if(!utils.isValidTimestamp(timestamp)){
+            resolve({
+                statusCode: 201
+            })
+        }
         db.serialize(() => {
             db.run(sql, params, err => {
                 if(err && err.message.includes('UNIQUE constraint failed')){
