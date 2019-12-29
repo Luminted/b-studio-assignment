@@ -11,7 +11,7 @@ router.get('/:stockSymbol/trades', function(req, res){
         const {statusCode} = resultObj;
         if(statusCode == 200){
             res.status(statusCode);
-            send(resultObj.result);
+            res.send(resultObj.result);
         }else{
             res.sendStatus(statusCode)
         }
@@ -29,7 +29,7 @@ router.get('/:stockSymbol/price', function(req, res){
         const {statusCode} = resultObj;
         if(statusCode == 200){
             res.status(statusCode);
-            send(resultObj.result);
+            res.send(resultObj.result);
         }else{
             res.sendStatus(statusCode)
         }
